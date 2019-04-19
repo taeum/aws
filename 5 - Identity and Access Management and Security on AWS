@@ -1,0 +1,189 @@
+
+Chapter Review
+In this chapter, you learned what AWS IAM is. IAM allows you to implement a comprehensive access control on AWS resources by giving you the ability to authenticate, authorize, and log all access. Therefore, you can implement the concepts of least privilege and segregation of duties. You can log every allow and deny in CloudTrail for troubleshooting or auditing purposes.
+
+You can use AWS IAM to securely control individual and group access to your AWS resources. You can create and manage user identities (called IAM users) and grant permissions for those IAM users to access your resources. You can also grant permissions for users outside of AWS. Any AWS customer can use IAM because the service is offered at no additional charge. You will be charged only for the use of other AWS services by your users.
+
+A user is a unique identity recognized by AWS services and applications. Similar to a login user in an operating system like Windows or UNIX, users have unique names and can identify themselves using familiar security credentials such as passwords or access keys.
+
+A group is a collection of IAM users. You can manage group membership as a simple list and add users to or remove them from a group. A user can belong to multiple groups. Groups cannot belong to other groups.
+
+An IAM role is an IAM entity that defines a set of permissions for making AWS service requests. IAM roles are not associated with a specific user or group. Instead, trusted entities assume roles, such as IAM users, applications, or AWS services such as EC2. IAM roles allow you to delegate access with defined permissions to trusted entities without having to share long-term access keys. You can use IAM roles to delegate access to IAM users managed within your account, to IAM users under a different AWS account, or to an AWS service such as EC2.
+
+You also studied the shared security model in which AWS is responsible for protecting the infrastructure that runs all of the services offered in the AWS cloud. This infrastructure is composed of the hardware, software, networking, and facilities that run AWS cloud services.
+
+Customer responsibility is determined by the AWS cloud services that a customer selects. This determines the amount of configuration work the customer must perform as part of its security responsibilities. For example, services such as Amazon Elastic Compute Cloud (Amazon EC2) are categorized as Infrastructure as a Service and, as such, requires the customer to perform all of the necessary security configuration and management tasks. If a customer deploys an Amazon EC2 instance, they are responsible for managing the guest operating system (including updates and security patches)
+
+--------------------------
+Questions
+1. 
+
+Can you add an IAM role to an IAM group?
+
+Yes
+
+No
+
+Yes, if there are ten members in the group
+
+Yes, if the group allows adding a role
+
+2. 
+
+An IAM policy contains which of the following? (Choose two.)
+
+Username
+
+Action
+
+Service name
+
+AZ
+
+
+3. 
+
+What happens if you delete an IAM role that is associated with a running EC2 instance?
+
+Any application running on the instance that is using the role will be denied access immediately.
+
+The application continues to use that role until the EC2 server is shut down.
+
+The application will have the access until the session is alive.
+
+The application will continue to have access.
+
+
+4. 
+
+For implementing security features, which of the following would you choose?
+
+Username/password
+
+MFA
+
+Using multiple S3 buckets
+
+Login using the root user
+
+5. 
+
+Which is based on temporary security tokens? (Choose two.)
+
+Amazon EC2 roles
+
+Federation
+
+Username password
+
+Using AWS STS
+
+
+6. 
+
+You want EC2 instances to give access without any username or password to S3 buckets. What is the easiest way of doing this?
+
+By using a VPC S3 endpoint
+
+By using a signed URL
+
+By using roles
+
+By sharing the keys between S3 and EC2
+
+
+7. 
+
+An IAM policy takes which form?
+
+Python script
+
+Written in C language
+
+JSON code
+
+XML code
+
+
+8. 
+
+If an administrator who has root access leaves the company, what should you do to protect your account? (Choose two.)
+
+Add MFA to root
+
+Delete all the IAM accounts
+
+Change the passwords for all the IAM accounts and rotate keys
+
+Delete all the EC2 instances created by the administrator
+
+9. 
+
+Using the shared security model, the customer is responsible for which of the following? (Choose two.)
+
+The security of the data running inside the database hosted in EC2
+
+Maintaining the physical security of the data center
+
+Making sure the hypervisor is patched correctly
+
+Making sure the operating system is patched correctly
+
+10. 
+
+In Amazon RDS, who is responsible for patching the database?
+
+Customer.
+
+Amazon.
+
+In RDS you don't have to patch the database.
+
+RDS does not come under the shared security model.
+
+*********************************
+Answers
+
+1. 
+
+B. No, you can't add an IAM role to an IAM group.
+
+2. 
+
+B, C. A policy is not location specific and is not limited to a user.
+
+3. 
+
+A. The application will be denied access.
+
+4. 
+
+A, B. Using multiple buckets won't help in terms of security. Similarly, leveraging multiple regions won't help to address the security.
+
+5. 
+
+B, D. The username password is not a temporary security token
+
+6. 
+
+C. A VPC endpoint is going to create a path between the EC2 instance and the Amazon S3 bucket. A signed URL won't help EC2 instances from accessing S3 buckets. You cannot share the keys between S3 and EC2.
+
+7. 
+
+C. It is written in JSON.
+
+8. 
+
+A, C. Deleting all the IAM accounts is going to be a bigger painful task. You are going to lose all the users. Similarly, you can't delete all the EC2 instances; they must be running some critical application or something meaningful.
+
+9. 
+
+A, D. The customer is responsible for the security of anything running on the hypervisor, and therefore the operating system and the security of data are the customer's responsibility.
+
+10. 
+
+B. RDS does come under a shared security model. Since it is a managed service, the patching of the database is taken care of by Amazon.
+
+Use of content on this site is subject to the restrictions set forth in the Terms of Use.
+Page Layout and Design © 2019 Skillsoft Ireland Limited - All rights reserved, individual content is owned by respective copyright holder.
+v1.0.8.420 Privacy and Cookie Policy Terms of Use Help Print Page Citation
