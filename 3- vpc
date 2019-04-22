@@ -1,0 +1,206 @@
+Chapter 3 - Virtual Private Cloud
+
+Chapter Review
+In this chapter, you learned what Amazon VPC is. 
+VPC allows you to have your own virtual private cloud and logically isolate a section in the cloud. 
+You can provision any resource in this logically isolated region, and you have complete control over the networking.
+
+You can connect to a VPC either with a virtual private network or with Direct Connect. 
+By subnetting you can divide a network into multiple networks. Inside a VPC, you can create various subnets per your needs. 
+The most common configuration consists of a public subnet, a private subnet, and a VPN-only subnet. 
+Route tables are tables consisting of certain rules known as routes that determine where the traffic is directed. 
+An Internet gateway is a component of your VPC that allows your VPC to communicate with the Internet. 
+By using a network address translator, you can enable any instance in a private subnet to connect to the Internet. 
+There are two types of NAT devices available within AWS NAT instances and NAT gateways. Similar to a NAT gateway, an egress-only Internet gateway is a component of your VPC that allows your VPC to communicate with the Internet for IPv6 traffic. 
+The Elastic Network Interface gives you the ability to create network interfaces and attach them to your instance. 
+An EIP gives you a static public IP address. 
+A security group is like a virtual firewall that can be assigned to any instance running in a virtual private client. 
+An NACL is a layer of security that acts as a firewall at the subnet level. VPC peering can be used to connect multiple VPCs. 
+The VPC endpoint gives you the ability to connect to VPC and S3 directly using private connectivity. 
+Amazon VPC flow logs enable you to capture information about the IP traffic going to and from network interfaces in your VPC. 
+In every account, a VPC is created in each region by default. This is called the default VPC. 
+This is created to provide simplicity and convenience and to help you get started with AWS. 
+You can connect to a VPC from your corporate data center in one of four ways.
+
+AWS hardware VPN
+
+AWS Direct Connect
+
+VPN CloudHub
+
+Software VPN
+-------------------
+Questions
+1. 
+
+You have created a VPC with two subnets. The web servers are running in a public subnet, and the database server is running in a private subnet. You need to download an operating system patch to update the database server. How you are going to download the patch?
+
+By attaching the Internet Gateway to the private subnet temporarily
+
+By using a NAT gateway
+
+By using peering to another VPC
+
+By changing the security group of the database server and allowing Internet access
+
+
+2. 
+
+What is the maximum size of the CIDR block you can have for a VPC?
+
+16
+
+32
+
+28
+
+10
+
+
+3. 
+
+How many IP addresses are reserved by AWS for internal purposes in a CIDR block that you can't use?
+
+5
+
+2
+
+3
+
+4
+
+
+4. 
+
+You have a web server and an app server running. You often reboot your app server for maintenance activities. Every time you reboot the app server, you need to update the connect string for the web server since the IP address of the app server changes. How do you fix this issue?
+
+Allocate an IPv6 IP address to the app server
+
+Allocate an Elastic Network Interface to the app server
+
+Allocate an elastic IP address to the app server
+
+Run a script to change the connection
+
+
+5. 
+
+To connect your corporate data center to AWS, you need at least which of the following components? (Choose two.)
+
+Internet gateway
+
+Virtual private gateway
+
+NAT gateway
+
+Customer gateway
+
+
+6. 
+
+You want to explicitly "deny" certain traffic to the instance running in your VPC. How do you achieve this?
+
+By using a security group
+
+By adding an entry in the route table
+
+By putting the instance in the private subnet
+
+By using a network access control list
+
+
+7. 
+
+You have created a web server in the public subnet, and now anyone can access the web server from the Internet. You want to change this behavior and just have the load balancer talk with the web server and no one else. How do you achieve this?
+
+By removing the Internet gateway
+
+By adding the load balancer in the route table
+
+By allowing the load balancer access in the NACL of the public subnet
+
+By modifying the security group of the instance and just having the load balancer talk with the web server
+
+
+
+8. 
+
+How can your VPC talk with DynamoDB directly?
+
+By using a direct connection
+
+By using a VPN connection
+
+By using a VPN endpoint
+
+By using an instance in the public subnet
+
+
+9. 
+
+The local route table in the VPC allows which of the following?
+
+So that all the instances running in different subnet within a VPC can communicate to each other
+
+So that only the traffic to the Internet can be routed
+
+So that multiple VPCs can talk with each other
+
+So that an instance can use the local route and talk to the Internet
+
+10. 
+
+What happens to the EIP address when you stop and start an instance?
+
+The EIP is released to the pool and you need to re-attach.
+
+The EIP is released temporarily during the stop and start.
+
+The EIP remains associated with the instance.
+
+The EIP is available for any other customer.
+
+-------------------------------------------
+
+Answers
+
+1. 
+
+B. The database server is running in a private subnet. Anything running in a private subnet should never face the Internet directly. Even if you peer to another VPC, you can't really connect to the Internet without using a NAT instance or a NAT gateway. Even if you change the security group of the database server and allow all incoming traffic, it still won't be able to connect to the Internet because the database server is running in the private subnet and the private subnet is not attached to the Internet gateway.
+
+2. 
+
+A. The maximum size of a VPC you can have is /16, which corresponds to 65,536 IP addresses.
+
+3. 
+
+A. AWS reserves five IP address for internal purposes, the first four and the last one.
+
+4. 
+
+C. Allocating an IPv6 IP address won't be of any use because whenever the server comes back, it is going to get assigned another new IPv6 IP address. Also, if your VPC doesn't support IPv6 and if you did not select the IPv6 option while creating the instance, you may not be able to allocate one. The Elastic Network Interface helps you add multiple network interfaces but won't get you a static IP address. You can run a script to change the connection, but unfortunately you have to run it every time you are done with any maintenance activities. You can even automate the running of the script, but why add so much complexity when you can solve the problem simply by allocating an EIP?
+
+5. 
+
+A, C. To connect to AWS from your data center, you need a customer gateway, which is the customer side of a connection, and a virtual private gateway, which is the AWS side of the connection. An Internet gateway is used to connect a VPC with the Internet, whereas a NAT gateway connects to the servers running in the private subnet in order to connect to the Internet.
+
+6. 
+
+D. By using a security group, you can allow and disallow certain traffic, but you can't explicitly deny traffic since the deny option does not exist for security groups. There is no option for denying particular traffic via a route table. By putting an instance in the private subnet, you are just removing the Internet accessibility of this instance, which is not going to deny any particular traffic.
+
+7. 
+
+D. By removing the Internet gateway, a web connection via the load balancer won't be able to reach the instance. You can add the route for a load balancer in the route table. NACL can allow or block certain traffic. In this scenario, you won't be able to use NACL.
+
+8. 
+
+C. Direct Connect and VPN are used to connect your corporate data center to AWS. DynamoDB is a service running in AWS. Even if you use an instance in a public subnet to connect with DynamoDB, it is still going to use the Internet. In this case, you won't be able to connect to DynamoDB, bypassing the Internet.
+
+9. 
+
+A. The traffic to the Internet is routed via the Internet gateway. Multiple VPCs can talk to each other via VPC peering.
+
+10. 
+
+C. Even during the stop and start of the instance, the EIP is associated with the instance. It gets detached when you explicitly terminate an instance.
+
