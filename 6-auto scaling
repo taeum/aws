@@ -1,0 +1,191 @@
+ Auto Scaling is the technology that allows you to scale your workload automatically up and down based on the rules you define. 
+ Auto Scaling can be integrated with various AWS services. The most popular use case is with EC2. 
+ To use Auto Scaling for an EC2 instance, you need to create a launch configuration, 
+ which stores all the information about the instance such as the AMI details, instance type, key pair, security group, IAM instance profile, user data, storage attached, and so on. 
+Then you create an Auto Scaling group, where you define the logic for scaling up and scaling down. 
+It has all the rules and policies that govern how the EC2 instances will be terminated or started. 
+To create an Auto Scaling group, you also need to define the minimum and maximum EC2 instances.
+
+There are three types of scaling policy that you can have.
+
+>Simple scaling - Using simple scaling, you can scale up or down on the basis of only one scaling adjustment. In this mechanism, you select an alarm, which can be either CPU utilization, disk read, disk write, network in, network out, and so on.
+
+>Simple scaling with steps - With simple scaling with steps, you do everything just like simple scaling, but in the end you add a few more steps.
+
+>Target-tracking scaling policy - In this policy, either you can select a predetermined metric or you choose your own metric and then set it to a target value. For example, you can choose the metric CPU utilization and set the target value to 50 percent.
+
+You also learned about Elastic Load Balancing. Elastic Load Balancing balances the workload across multiple EC2 instances. 
+There are three main load balancers you can leverage using Amazon Web Services.
+
+>Network load balancer - This is also known as a TCP load balancer. It acts in the layer 4 of OSI model. This is basically a connection-based load balancing model.
+
+>Application load balancer - The application load balancer works on layer 7 of the OSI model. It supports HTTP and HTTPS.
+
+>Classic load balancer - The classic load balancer supports the classic EC2 instances.
+
+-----------------------------------------------------------------
+Questions
+1. 
+
+Where do you define the details of the type of servers to be launched when launching the servers using Auto Scaling?
+
+Auto Scaling group
+
+Launch configuration
+
+Elastic Load Balancer
+
+Application load balancer
+
+2. 
+
+What happens when the Elastic Load Balancing fails the health check? (Choose the best answer.)
+
+The Elastic Load Balancing fails over to a different load balancer.
+
+The Elastic Load Balancing keeps on trying until the instance comes back online.
+
+The Elastic Load Balancing cuts off the traffic to that instance and starts a new instance.
+
+The load balancer starts a bigger instance.
+
+3. 
+
+When you create an Auto Scaling mechanism for a server, which two things are mandatory? (Choose two.)
+
+Elastic Load Balancing
+
+Auto Scaling group
+
+DNS resolution
+
+Launch configuration
+
+4. 
+
+You have configured a rule that whenever the CPU utilization of your EC2 goes up, Auto Scaling is going to start a new server for you. Which tool is Auto Scaling using to monitor the CPU utilization?
+
+CloudWatch metrics.
+
+Output of the top command.
+
+The ELB health check metric.
+
+It depends on the operating system. Auto Scaling uses the OS-native tool to capture the CPU utilization.
+
+5. 
+
+The listener within a load balancer needs two details in order to listen to incoming traffic. What are they? (Choose two.)
+
+Type of the operating system
+
+Port number
+
+Protocol
+
+IP address
+
+6. 
+
+Which load balancer is not capable of doing the health check?
+
+Application load balancer
+
+Network load balancer
+
+Classic load balancer
+
+None of the above
+
+7. 
+
+If you want your request to go to the same instance to get the benefits of caching the content, what technology can help provide that objective?
+
+Sticky session
+
+Using multiple AZs
+
+Cross-zone load balancing
+
+Using one ELB per instance
+
+8. 
+
+You are architecting an internal-only application. How can you make sure the ELB does not have any Internet access?
+
+You detach the Internet gateway from the ELB.
+
+You create the instances in the private subnet and hook up the ELB with that.
+
+The VPC should not have any Internet gateway attached.
+
+When you create the ELB from the console, you can define whether it is internal or external.
+
+9. 
+
+Which of the following is a true statement? (Choose two.)
+
+ELB can distribute traffic across multiple regions.
+
+ELB can distribute across multiple AZs but not across multiple regions.
+
+ELB can distribute across multiple AZs.
+
+ELB can distribute traffic across multiple regions but not across multiple AZs.
+
+
+10. 
+
+How many EC2 instances can you have in an Auto Scaling group?
+
+10.
+
+20.
+
+100.
+
+There is no limit to the number of EC2 instances you can have in the Auto Scaling group.
+
+--------------------------------------
+Answers
+
+1. 
+
+B. You define the type of servers to be launched in the launch configuration. The Auto Scaling group is used to define the scaling policies, Elastic Load Balancing is used to distribute the traffic across multiple instances, and the application load balancer is used to distribute the HTTP/HTTS traffic at OSI layer 7.
+
+2. 
+
+C. When Elastic Load Balancing fails over, it is an internal mechanism that is transparent to end users. Elastic Load Balancing keeps on trying, but if the instance does not come back online, it starts a new instance. It does not wait indefinitely for that instance to come back online. The load balancer starts the new instance, which is defined in the launch configuration. It is going to start the same type of instance unless you have manually changed the launch configuration to start a bigger type of instance.
+
+3. 
+
+B, D. The launch configuration and the Auto Scaling group are mandatory.
+
+4. 
+
+A. Auto Scaling relies on the CloudWatch metrics to find the CPU utilization. Using the top command or the native OS tools, you should be able to identify the CPU utilization, but Auto Scaling does not use that.
+
+5. 
+
+B, C. Listeners define the protocol and port on which the load balancer listens for incoming connections.
+
+6. 
+
+D. All the load balancers are capable of doing a health check.
+
+7. 
+
+A. Using multiple AZs, you can distribute your load across multiple AZs, but you can't direct the request to go to same instance. Cross-zone load balancing is used to bypass caching. Using one ELB per instance is going to complicate things.
+
+8. 
+
+D. You can't attach or detach an Internet gateway with ELB, even if you create the instances in private subnet, and if you create an external-facing ELB instance, it will have Internet connectivity. The same applies for VPC; even if you take an IG out of the VPC but create ELB as external facing, it will still have Internet connectivity.
+
+9. 
+
+B, C. ELB can span multiple AZs within a region. It cannot span multiple regions.
+
+10. 
+
+D. There is no limit to the number of EC2 instances you can have in the Auto Scaling group. However, there might an EC2 limitation in your account that can be increased by logging a support ticket.
+
